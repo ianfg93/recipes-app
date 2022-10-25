@@ -36,7 +36,9 @@ describe('Testa o componente Login', () => {
 
     userEvent.click(secondButtonEnter);
 
-    const { location: { pathname } } = history;
+    const {
+      location: { pathname },
+    } = history;
     expect(pathname).toBe('/meals');
-    });
+  });
 });
