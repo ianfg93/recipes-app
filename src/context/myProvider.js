@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import MyContext from './myContext';
+import myContext from './myContext';
 
 function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
-  const contexto = { email, password, isBtnDisabled };
+  const [isDisabled, setDisabled] = useState(true);
 
-  const handleEmail = ({ target: { value } }) => {
+  const handleEmail = useCallback(({ target: { value } }) => {
     setEmail(value);
-  };
+  }, [setEmail]);
 
-  const handlePassword = ({ target: { value } }) => {
+  const handlePassword = useCallback(({ target: { value } }) => {
     setPassword(value);
-  };
+  }, [setPassword]);
 
-  const handleIsBtnDisabled = ({ target: { value } }) => {
-    setIsBtnDisabled(value);
-  };
+  /* const handleDisabled = ({ target: { value } }) => {
+    setDisabled(value);
+  }; */
+  useEffect(() => {
+    const regex = /\S+@\S+\.\S+/;
+    const verifyEmail = regex.test(email);
+    const numeroMinimo = 6;
+    const verifyPassword = password.length > numeroMinimo;
+    setDisabled(!(verifyEmail && verifyPassword));
+  }, [email, password]);
+
+  const contexto = useMemo(() => (
+    {
+      email,
+      password,
+      isDisabled,
+      handleEmail,
+      handlePassword }), [email, password, isDisabled, handleEmail, handlePassword]);
 
   return (
-    <MyContext.Provider value={ contexto }>
+    <myContext.Provider value={ contexto }>
       {children}
-    </MyContext.Provider>
+    </myContext.Provider>
   );
 }
 
 Provider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.shape().isRequired,
 };
 
 export default Provider;
