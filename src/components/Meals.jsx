@@ -1,7 +1,10 @@
-import React from 'react';
+import Header from './Header';
 
 export default function Receitas() {
   return (
-    <div>Tela de receitas</div>
+    <div>
+      <Header titlePage="Meals" />
+      <h1>Receitas</h1>
+    </div>
   );
 }

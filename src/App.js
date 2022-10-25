@@ -6,6 +6,10 @@ import { Route, Switch } from 'react-router-dom';
 import Provider from './context/myProvider';
 import Login from './components/Login';
 import Meals from './components/Meals';
+import Profile from './components/Profile';
+import Drinks from './components/Drinks';
+import DoneRecipes from './components/DoneRecipes';
+import FavoriteRecipes from './components/FavoriteRecipes';
 
 function App() {
   return (
@@ -23,6 +27,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/meals" component={ Meals } />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/drinks" component={ Drinks } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </Provider>
   );
