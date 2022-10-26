@@ -7,6 +7,7 @@ import { renderWithRouter } from './helpers/renderWithRouter';
 describe('Testa o componente Login', () => {
   test('', () => {
     renderWithRouter(<App />);
+
     const inputEmail = screen.getByTestId('email-input');
     const inputPassword = screen.getByTestId('password-input');
     const buttonEnter = screen.getByRole('button', {
@@ -16,18 +17,25 @@ describe('Testa o componente Login', () => {
     expect(inputPassword).toBeInTheDocument();
     expect(buttonEnter).toBeInTheDocument();
   });
+
   it('', () => {
     const { history } = renderWithRouter(<App />);
+
     const inputSecondEmail = screen.getByTestId('email-input');
     const inputSecondPassword = screen.getByTestId('password-input');
     const secondButtonEnter = screen.getByRole('button', {
       name: /entrar/i,
     });
+
     expect(secondButtonEnter).toBeDisabled();
+
     userEvent.type(inputSecondEmail, 'testTrybe@gmail.com');
     userEvent.type(inputSecondPassword, '1234567');
+
     expect(secondButtonEnter).toBeEnabled();
+
     userEvent.click(secondButtonEnter);
+
     const {
       location: { pathname },
     } = history;
