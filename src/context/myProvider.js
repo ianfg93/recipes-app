@@ -6,6 +6,7 @@ function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setDisabled] = useState(true);
+  const [title, setTitle] = useState('');
 
   const handleEmail = useCallback(({ target: { value } }) => {
     setEmail(value);
@@ -26,13 +27,24 @@ function Provider({ children }) {
     setDisabled(!(verifyEmail && verifyPassword));
   }, [email, password]);
 
-  const contexto = useMemo(() => (
-    {
-      email,
+  const contexto = useMemo(
+    () => (
+      {
+        email,
+        password,
+        isDisabled,
+        handleEmail,
+        handlePassword,
+        title,
+        setTitle }),
+    [email,
       password,
       isDisabled,
       handleEmail,
-      handlePassword }), [email, password, isDisabled, handleEmail, handlePassword]);
+      handlePassword,
+      title,
+      setTitle],
+  );
 
   return (
     <myContext.Provider value={ contexto }>

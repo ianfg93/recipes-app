@@ -4,8 +4,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
 import Provider from './context/myProvider';
-import Login from './components/Login';
-import Meals from './components/Meals';
+import Login from './Pages/Login';
+import Meals from './Pages/Meals';
+import Profile from './Pages/Profile';
+import Drinks from './Pages/Drinks';
+import DoneRecipes from './Pages/DoneRecipes';
+import FavoriteRecipes from './Pages/FavoriteRecipes';
+import IdDrinks from './Pages/IdDrinks';
+import IdMeals from './Pages/IdMeals';
+import IdDrinksInProgress from './Pages/IdDrinksInProgress';
+import IdMealsInProgress from './Pages/IdMealsInProgress';
 
 function App() {
   return (
@@ -22,7 +30,22 @@ function App() {
     <Provider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/meals" component={ Meals } />
+        <Route exact path="/meals" component={ Meals } />
+        <Route exact path="/profile" component={ Profile } />
+        <Route exact path="/drinks" component={ Drinks } />
+        <Route exact path="/done-recipes" component={ DoneRecipes } />
+        <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route exact path="drinks/:id-da-receita" component={ IdDrinks } />
+        <Route exact path="/meals/:id-da-receita" component={ IdMeals } />
+        <Route
+          exact
+          path="/meals/:id-da-receita/in-progress"
+          component={ IdMealsInProgress }
+        />
+        <Route
+          path="/drinks/:id-da-receita/in-progress"
+          component={ IdDrinksInProgress }
+        />
       </Switch>
     </Provider>
   );
