@@ -11,6 +11,7 @@ function Footer() {
       data-testid="footer"
       className="footer"
     >
+      FOOTER
       <Link to="/drinks">
         <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="Drinks" />
       </Link>
