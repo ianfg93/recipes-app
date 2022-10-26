@@ -5,25 +5,35 @@ import { renderWithRouter } from './helpers/renderWithRouter';
 import App from '../App';
 
 describe('Testando o componente Header', () => {
-  test('Verificando os data-test', () => {
+  test('Verificando os: page-title, profile-top-btn e search-top-btn ', () => {
     const { history } = renderWithRouter(<App />);
     act(() => { history.push('/meals'); });
     const pageTitle = screen.getByTestId('page-title');
     const profileTopBtn = screen.getByTestId('profile-top-btn');
     const searchTopBtn = screen.getByTestId('search-top-btn');
+    const searchInput = screen.getByTestId('search-input');
+    userEvent.click(profileTopBtn);
+    userEvent.click(searchTopBtn);
+    userEvent.click(searchInput);
     expect(pageTitle).toBeInTheDocument();
     expect(profileTopBtn).toBeInTheDocument();
     expect(searchTopBtn).toBeInTheDocument();
   });
-  test('Verificando os clicks', () => {
+  test('Verificando o search', () => {
     const { history } = renderWithRouter(<App />);
     act(() => { history.push('/meals'); });
-    const verificandoProfileBtn = screen.getByTestId('profile-top-btn');
-    const verificandoSearchBtn = screen.getByTestId('search-top-btn');
-    userEvent.click(verificandoProfileBtn);
-    userEvent.click(verificandoSearchBtn);
+    const serachBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(serachBtn);
   });
-  test('Verificando as rotas', () => {
+  test('Verificando o search', () => {
+    const { history } = renderWithRouter(<App />);
+    act(() => { history.push('/profile'); });
+    const profileBtn = screen.getByTestId('profile-top-btn');
+    userEvent.click(profileBtn);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/profile');
+  });
+  test('Verificando as mudanças das rotas', () => {
     const { history } = renderWithRouter(<App />);
     act(() => { history.push('/meals'); });
     expect(history.location.pathname).toBe('/meals');
