@@ -10,7 +10,6 @@ function withRouter(component, history) {
     </Router>
   );
 }
-
 export function renderWithRouter(
   component,
   {
@@ -23,25 +22,21 @@ export function renderWithRouter(
     history,
   };
 }
-
 export function renderWithRedux(component, options = {}) {
   const {
     initialState = {},
     store = createStore(rootReducer, initialState, applyMiddleware(thunk)),
   } = options;
-
   return {
     ...render(withRedux(component, store)),
     store,
   };
 }
-
 export function renderWithRouterAndRedux(component, options = {}) {
   const {
     initialEntries = ['/'],
     history = createMemoryHistory({ initialEntries }),
   } = options;
-
   return {
     ...renderWithRedux(withRouter(component, history), options),
     history,
