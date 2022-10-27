@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import myContext from './myContext';
+import UseApiMeals from '../hooks/UseApiMeals';
+import UseApiDrinks from '../hooks/UseApiDrinks';
 
 function Provider({ children }) {
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabled, setDisabled] = useState(true);
@@ -20,9 +25,6 @@ function Provider({ children }) {
     setPassword(value);
   }, [setPassword]);
 
-  /* const handleDisabled = ({ target: { value } }) => {
-    setDisabled(value);
-  }; */
   useEffect(() => {
     const regex = /\S+@\S+\.\S+/;
     const verifyEmail = regex.test(email);
@@ -39,46 +41,14 @@ function Provider({ children }) {
     setInputSearch(value);
   }, []);
 
-  const ingredientFilter = useCallback(async () => {
-    const endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
-    const response = await fetch(endPoint);
-    const { meals } = await response.json();
-    setIngredientApi(meals);
-  }, [inputSearch]);
-  // const ingredientFilter = useCallback(async () => {
-
-  // }, [inputSearch, ingredientApi]);
-
-  const nameFilter = useCallback(async () => {
-    const endPointRecipes = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
-    const response = await fetch(endPointRecipes);
-    const { meals } = await response.json();
-    setIngredientApi(meals);
-  }, [inputSearch]);
-
-  const firstLetterFilter = useCallback(async () => {
-    if (inputSearch.length === 1) {
-      const endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`;
-      const response = await fetch(endPoint);
-      const { meals } = await response.json();
-      console.log(meals);
-      setIngredientApi(meals);
-    } else {
-      global.alert('Your search must have only 1 (one) character');
-    }
-  }, [inputSearch]);
-
   const radioReturn = useCallback(async () => {
-    if (optionRadio === 'ingredient' && inputSearch.length > 1) {
-      await ingredientFilter();
+    if (history.location.pathname === '/meals') {
+      UseApiMeals(inputSearch, optionRadio, setIngredientApi);
     }
-    if (optionRadio === 'name' && inputSearch.length > 1) {
-      await nameFilter();
+    if (history.location.pathname === '/drinks') {
+      UseApiDrinks(inputSearch, optionRadio, setIngredientApi);
     }
-    if (optionRadio === 'first-letter') {
-      await firstLetterFilter();
-    }
-  }, [optionRadio, inputSearch, ingredientFilter, nameFilter, firstLetterFilter]);
+  }, [inputSearch, optionRadio, history.location.pathname]);
 
   const contexto = useMemo(
     () => (
