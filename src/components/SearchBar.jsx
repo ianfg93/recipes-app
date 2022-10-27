@@ -15,7 +15,7 @@ function SearchBar() {
         <input
           type="radio"
           value="ingredient"
-          name="ingredient-search"
+          name="radio-button"
           data-testid="ingredient-search-radio"
           onChange={ handleOptionRadio }
         />
@@ -25,7 +25,7 @@ function SearchBar() {
         <input
           type="radio"
           value="name"
-          name="name-search"
+          name="radio-button"
           data-testid="name-search-radio"
           onChange={ handleOptionRadio }
         />
@@ -35,7 +35,7 @@ function SearchBar() {
         <input
           type="radio"
           value="first-letter"
-          name="first-letter-search"
+          name="radio-button"
           data-testid="first-letter-search-radio"
           onChange={ handleOptionRadio }
         />

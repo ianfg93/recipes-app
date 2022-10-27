@@ -10,7 +10,7 @@ function Header() {
   const { title, setTitle } = useContext(myContext);
   const [search, setSearch] = useState(false);
   const history = useHistory();
-  const { handleInputSearch, inputSearch } = useContext;
+  const { handleInputSearch, inputSearch } = useContext(myContext);
 
   useEffect(() => {
     const { pathname } = history.location;
@@ -71,7 +71,7 @@ function Header() {
       }
       {search
       && <input
-        type="search"
+        type="text"
         data-testid="search-input"
         value={ inputSearch }
         onChange={ handleInputSearch }

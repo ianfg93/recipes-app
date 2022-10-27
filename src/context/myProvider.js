@@ -31,13 +31,13 @@ function Provider({ children }) {
     setDisabled(!(verifyEmail && verifyPassword));
   }, [email, password]);
 
-  const handleOptionRadio = ({ target: { value } }) => {
+  const handleOptionRadio = useCallback(({ target: { value } }) => {
     setOptionRadio(value);
-  };
+  }, []);
 
-  const handleInputSearch = ({ target: { value } }) => {
+  const handleInputSearch = useCallback(({ target: { value } }) => {
     setInputSearch(value);
-  };
+  }, []);
 
   const ingredientFilter = useCallback(async () => {
     const endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
@@ -45,6 +45,9 @@ function Provider({ children }) {
     const { meals } = await response.json();
     setIngredientApi(meals);
   }, [inputSearch]);
+  // const ingredientFilter = useCallback(async () => {
+
+  // }, [inputSearch, ingredientApi]);
 
   const nameFilter = useCallback(async () => {
     const endPointRecipes = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
@@ -55,9 +58,10 @@ function Provider({ children }) {
 
   const firstLetterFilter = useCallback(async () => {
     if (inputSearch.length === 1) {
-      const endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
+      const endPoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`;
       const response = await fetch(endPoint);
       const { meals } = await response.json();
+      console.log(meals);
       setIngredientApi(meals);
     } else {
       global.alert('Your search must have only 1 (one) character');
@@ -96,6 +100,8 @@ function Provider({ children }) {
       isDisabled,
       handleEmail,
       handlePassword,
+      handleOptionRadio,
+      handleInputSearch,
       inputSearch,
       ingredientApi,
       radioReturn,
