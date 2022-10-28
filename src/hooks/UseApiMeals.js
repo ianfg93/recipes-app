@@ -4,6 +4,7 @@ async function UseApiMeals(inputSearch, optionRadio, setIngredient) {
     const response = await fetch(endPoint);
     const { meals } = await response.json();
     if (!meals) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
       setIngredient([]);
     } else {
       setIngredient(meals);
@@ -15,6 +16,7 @@ async function UseApiMeals(inputSearch, optionRadio, setIngredient) {
     const response = await fetch(endPointRecipes);
     const { meals } = await response.json();
     if (!meals) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
       setIngredient([]);
     } else {
       setIngredient(meals);
