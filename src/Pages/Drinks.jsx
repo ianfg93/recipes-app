@@ -16,11 +16,6 @@ function Drinks() {
       <h1> Drinks </h1>
       <div>
         {
-          ingredientApi.length === 0 && (
-            global.alert('Sorry, we haven\'t found any recipes for these filters.')
-          )
-        }
-        {
           ingredientApi.length === 1 && (
             <Redirect to={ `/drinks/${ingredientApi[0].idDrink}` } />
           )

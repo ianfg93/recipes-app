@@ -9,18 +9,12 @@ function Meals() {
   const { ingredientApi } = useContext(myContext);
 
   const MAX_RECIPES = 12;
-
   return (
     <div>
       <Header />
       <SearchBar />
       <h1> Tela de receitas </h1>
       <div>
-        {
-          ingredientApi.length === 0 && (
-            global.alert('Sorry, we haven\'t found any recipes for these filters.')
-          )
-        }
         {
           ingredientApi.length === 1 ? (
             <Redirect to={ `/meals/${ingredientApi[0].idMeal}` } />

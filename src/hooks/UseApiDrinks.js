@@ -4,6 +4,7 @@ async function UseApiDrinks(inputSearch, optionRadio, setIngredient) {
     const response = await fetch(endPoint);
     const { drinks } = await response.json();
     if (!drinks) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
       setIngredient([]);
     } else {
       setIngredient(drinks);
@@ -16,6 +17,7 @@ async function UseApiDrinks(inputSearch, optionRadio, setIngredient) {
     const { drinks } = await response.json();
     setIngredient(drinks);
     if (!drinks) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
       setIngredient([]);
     } else {
       setIngredient(drinks);
