@@ -3,14 +3,22 @@ async function UseApiMeals(inputSearch, optionRadio, setIngredient) {
     const endPoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
     const response = await fetch(endPoint);
     const { meals } = await response.json();
-    setIngredient(meals);
+    if (!meals) {
+      setIngredient([]);
+    } else {
+      setIngredient(meals);
+    }
   };
 
   const nameFilter = async () => {
     const endPointRecipes = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
     const response = await fetch(endPointRecipes);
     const { meals } = await response.json();
-    setIngredient(meals);
+    if (!meals) {
+      setIngredient([]);
+    } else {
+      setIngredient(meals);
+    }
   };
 
   const firstLetterFilter = async () => {

@@ -3,7 +3,11 @@ async function UseApiDrinks(inputSearch, optionRadio, setIngredient) {
     const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
     const response = await fetch(endPoint);
     const { drinks } = await response.json();
-    setIngredient(drinks);
+    if (!drinks) {
+      setIngredient([]);
+    } else {
+      setIngredient(drinks);
+    }
   };
 
   const nameFilter = async () => {
@@ -11,6 +15,11 @@ async function UseApiDrinks(inputSearch, optionRadio, setIngredient) {
     const response = await fetch(endPointRecipes);
     const { drinks } = await response.json();
     setIngredient(drinks);
+    if (!drinks) {
+      setIngredient([]);
+    } else {
+      setIngredient(drinks);
+    }
   };
 
   const firstLetterFilter = async () => {

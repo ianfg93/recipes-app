@@ -7,6 +7,7 @@ import myContext from '../context/myContext';
 
 function Drinks() {
   const { ingredientApi } = useContext(myContext);
+  const MAX_RECIPES = 12;
 
   return (
     <div>
@@ -15,12 +16,35 @@ function Drinks() {
       <h1> Drinks </h1>
       <div>
         {
+          ingredientApi.length === 0 && (
+            global.alert('Sorry, we haven\'t found any recipes for these filters.')
+          )
+        }
+        {
           ingredientApi.length === 1 && (
             <Redirect to={ `/drinks/${ingredientApi[0].idDrink}` } />
           )
         }
+        {
+          ingredientApi.filter((element, index) => index < MAX_RECIPES)
+            .map((element, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+              >
+                <img
+                  src={ element.strDrinkThumb }
+                  alt="imagem"
+                  data-testid={ `${index}-card-img` }
+                />
+                <p
+                  data-testid={ `${index}-card-name` }
+                >
+                  {element.strDrink}
+                </p>
+              </div>))
+        }
       </div>
-
       <Footer />
     </div>
   );
