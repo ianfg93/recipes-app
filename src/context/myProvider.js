@@ -43,10 +43,10 @@ function Provider({ children }) {
 
   const radioReturn = useCallback(async () => {
     if (history.location.pathname === '/meals') {
-      UseApiMeals(inputSearch, optionRadio, setIngredientApi);
+      await UseApiMeals(inputSearch, optionRadio, setIngredientApi);
     }
     if (history.location.pathname === '/drinks') {
-      UseApiDrinks(inputSearch, optionRadio, setIngredientApi);
+      await UseApiDrinks(inputSearch, optionRadio, setIngredientApi);
     }
   }, [inputSearch, optionRadio, history.location.pathname]);
 
