@@ -24,7 +24,6 @@ function CardRecipes() {
     setIngredients(emptyFilter);
   }, [returnApi]);
 
-
   useEffect(() => {
     let typeProduct = '';
 
