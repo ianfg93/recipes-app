@@ -118,8 +118,8 @@ function Provider({ children }) {
       if (type === 'drinks') {
         const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
         const response = await fetch(endPoint);
-        const { drinks } = await response.json();
-        return drinks[0];
+        const results = await response.json();
+        return results.drinks[0];
       }
       const endPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const response = await fetch(endPoint);

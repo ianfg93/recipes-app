@@ -12,7 +12,7 @@ function CardRecipes() {
 
   const { pathname } = useLocation();
 
-  const { id } = useParams;
+  const { id } = useParams();
 
   const ingredientsReturn = useCallback(() => {
     const keyIngredient = Object.keys(returnApi)
@@ -23,6 +23,10 @@ function CardRecipes() {
       .filter((element) => returnApi[element] !== '');
     setIngredients(emptyFilter);
   }, [returnApi]);
+
+  useEffect(() => {
+    ingredientsReturn();
+  }, [returnApi, ingredientsReturn]);
 
   useEffect(() => {
     let typeProduct = '';
@@ -39,8 +43,8 @@ function CardRecipes() {
       }
     };
     settingProduct();
-    ingredientsReturn();
-  }, [id, pathname, recipeId, ingredientsReturn]);
+    // ingredientsReturn();
+  }, [id, pathname, recipeId]);
 
   const handleClick = (ingredient) => {
     if (!check.some((element) => element === ingredient)) {
@@ -101,7 +105,10 @@ function CardRecipes() {
               { returnApi.strInstructions }
             </p>
 
-            <button type="button" data-testid="finish-recipe-btn">
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+            >
               Finish Recipe
             </button>
           </section>
