@@ -113,6 +113,23 @@ function Provider({ children }) {
     }
   }, [inputSearch, optionRadio, history.location.pathname]);
 
+  const recipeId = useCallback(async (id, type) => {
+    try {
+      if (type === 'drinks') {
+        const endPoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+        const response = await fetch(endPoint);
+        const { drinks } = await response.json();
+        return drinks[0];
+      }
+      const endPoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+      const response = await fetch(endPoint);
+      const { meals } = await response.json();
+      return meals[0];
+    } catch (error) {
+      return error;
+    }
+  }, []);
+
   const contexto = useMemo(
     () => (
       {
@@ -127,6 +144,7 @@ function Provider({ children }) {
         handleInputSearch,
         radioReturn,
         filterApiReturn,
+        recipeId,
         apiDrinks,
         apiMeals,
         initialDrinks,
@@ -152,6 +170,7 @@ function Provider({ children }) {
       apiDrinks,
       apiMeals,
       filterApiReturn,
+      recipeId,
       categoryDrinks,
       categoryMeals,
       initialDrinks,
