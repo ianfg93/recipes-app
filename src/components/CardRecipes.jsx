@@ -27,7 +27,7 @@ function CardRecipes() {
 
   useEffect(() => {
     ingredientsReturn();
-  }, [returnApi]);
+  }, [returnApi, ingredientsReturn]);
 
   useEffect(() => {
     let typeProduct = '';
@@ -46,7 +46,7 @@ function CardRecipes() {
     };
     settingProduct();
     // ingredientsReturn();
-  }, []);
+  }, [id, pathname, recipeId]);
 
   const handleClick = (ingredient) => {
     if (!check.some((element) => element === ingredient)) {
