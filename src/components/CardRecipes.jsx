@@ -21,7 +21,6 @@ function CardRecipes() {
       .filter((element) => returnApi[element] !== null);
     const emptyFilter = filteringIngredients
       .filter((element) => returnApi[element] !== '');
-    console.log(emptyFilter);
     setIngredients(emptyFilter);
   }, [returnApi]);
 
@@ -36,7 +35,6 @@ function CardRecipes() {
       if (pathname.includes('drinks')) {
         typeProduct = 'drinks';
         const dataProduct = await recipeId(id, typeProduct);
-        console.log(dataProduct);
         setReturnApi(dataProduct);
       } else {
         typeProduct = 'meals';
