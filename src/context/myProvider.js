@@ -26,6 +26,7 @@ function Provider({ children }) {
   const [initialDrinks, setInitialDrinks] = useState([]);
   const [categoryMeals, setCategoryMeals] = useState([]);
   const [categoryDrinks, setCategoryDrinks] = useState([]);
+  const [apiRecipeDetails, setApiRecipeDetails] = useState([]);
 
   const handleEmail = useCallback(({ target: { value } }) => {
     setEmail(value);
@@ -154,7 +155,9 @@ function Provider({ children }) {
         handleApiDrinks,
         handleApiMeals,
         title,
-        setTitle }),
+        setTitle,
+        apiRecipeDetails,
+        setApiRecipeDetails }),
     [email,
       password,
       isDisabled,
@@ -176,7 +179,9 @@ function Provider({ children }) {
       initialDrinks,
       initialMeals,
       title,
-      setTitle],
+      setTitle,
+      apiRecipeDetails,
+      setApiRecipeDetails],
   );
 
   return (
