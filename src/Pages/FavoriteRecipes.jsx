@@ -6,7 +6,7 @@ function FavoriteRecipes() {
 
   return (
     <main>
-      FavoriteRecipes!
+      FavoriteRecipes!!
       <Header />
       <button
         type="button"
