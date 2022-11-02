@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 
 function FavoriteRecipes() {
@@ -6,7 +6,7 @@ function FavoriteRecipes() {
 
   return (
     <main>
-      FavoriteRecipes
+      FavoriteRecipes!!
       <Header />
       <button
         type="button"
