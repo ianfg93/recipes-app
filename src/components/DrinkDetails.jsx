@@ -30,7 +30,7 @@ export default function DrinkDetails() {
 
   return (
     <div>
-      DrinkDetails
+      DrinkDetails:
       {
         apiRecipeDetails?.drinks !== undefined
           ? (
