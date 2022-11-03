@@ -7,12 +7,24 @@ function CardRecipes() {
   const [returnApi, setReturnApi] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [check, setCheck] = useState([]);
+  const [objectType, setObjectType] = useState('');
 
   const { recipeId } = useContext(myContext);
 
   const { pathname } = useLocation();
 
   const { id } = useParams();
+
+  useEffect(() => {
+    if (objectType !== '') {
+      const ingredientsLocalStorage = localStorage
+        .getItem('inProgressRecipes')[objectType];
+      if (typeof ingredientsLocalStorage === 'object'
+            && Object.keys(ingredientsLocalStorage).includes(id)) {
+        setCheck(ingredientsLocalStorage[id]);
+      }
+    }
+  }, [id, objectType]);
 
   const ingredientsReturn = useCallback(() => {
     const keyIngredient = Object.keys(returnApi)
@@ -34,10 +46,12 @@ function CardRecipes() {
     const settingProduct = async () => {
       if (pathname.includes('drinks')) {
         typeProduct = 'drinks';
+        setObjectType(typeProduct);
         const dataProduct = await recipeId(id, typeProduct);
         setReturnApi(dataProduct);
       } else {
         typeProduct = 'meals';
+        setObjectType(typeProduct);
         const dataProduct = await recipeId(id, typeProduct);
         setReturnApi(dataProduct);
       }
@@ -45,6 +59,19 @@ function CardRecipes() {
     settingProduct();
     // ingredientsReturn();
   }, [id, pathname, recipeId]);
+
+  useEffect(() => {
+    if (check.length > 0 && objectType !== '') {
+      const objectLocalStorage = localStorage.getItem('inProgressRecipes');
+      objectLocalStorage[objectType][id] = check;
+      localStorage.setItem('inProgressRecipes', objectLocalStorage);
+    }
+    if (check.length === 0 && objectType) {
+      const objectLocalStorage = localStorage.getItem('inProgressRecipes');
+      objectLocalStorage[objectType][id] = [];
+      localStorage.setItem('inProgressRecipes', objectLocalStorage);
+    }
+  }, [check, id, objectType]);
 
   const handleClick = (ingredient) => {
     if (!check.some((element) => element === ingredient)) {
@@ -96,6 +123,9 @@ function CardRecipes() {
                       type="checkbox"
                       id={ `${index} - check` }
                       onClick={ () => handleClick(returnApi[mapElement]) }
+                      defaultChecked={
+                        check.some((element) => element === returnApi[mapElement])
+                      }
                     />
                   </label>
                 ))
@@ -149,6 +179,9 @@ function CardRecipes() {
                       type="checkbox"
                       id={ `${index} - check` }
                       onClick={ () => handleClick(returnApi[elementMap]) }
+                      defaultChecked={
+                        check.some((element) => element === returnApi[elementMap])
+                      }
                     />
                   </label>
                 ))
