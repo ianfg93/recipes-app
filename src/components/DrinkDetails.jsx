@@ -26,7 +26,7 @@ export default function DrinkDetails() {
       setMeasure(getMesure);
     };
     setApi();
-  }, []);
+  }, [paramsUrl, setApiRecipeDetails]);
 
   return (
     <div>

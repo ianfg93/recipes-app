@@ -25,7 +25,7 @@ export default function MealDetails() {
       setMeasure(getMesure);
     };
     setApi();
-  }, []);
+  }, [paramsUrl, setApiRecipeDetails]);
 
   /* console.log(apiRecipeDetails?.meals[0].strMealThumb); */
 

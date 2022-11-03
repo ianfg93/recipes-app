@@ -49,8 +49,9 @@ function CardRecipes() {
   const handleClick = (ingredient) => {
     if (!check.some((element) => element === ingredient)) {
       setCheck([...check, ingredient]);
+    } else {
+      setCheck(check.filter((element) => element !== ingredient));
     }
-    setCheck(check.filter((element) => element !== ingredient));
   };
 
   return (
@@ -85,7 +86,7 @@ function CardRecipes() {
                   <label
                     className={ check
                       .some((element) => element === returnApi[mapElement])
-                      ? 'marked' : undefined }
+                      ? 'checked' : undefined }
                     key={ index }
                     htmlFor={ `${index} - check` }
                     data-testid={ `${index}-ingredient-step` }
@@ -138,7 +139,7 @@ function CardRecipes() {
                   <label
                     className={ check
                       .some((element) => element === returnApi[elementMap])
-                      ? 'marked' : undefined }
+                      ? 'checked' : undefined }
                     key={ index }
                     htmlFor={ `${index} - check` }
                     data-testid={ `${index}-ingredient-step` }
