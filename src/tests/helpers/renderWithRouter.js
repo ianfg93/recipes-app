@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-function withRouter(component, history) {
+export function withRouter(component, history) {
   return (
     <Router history={ history }>
       { component }
@@ -42,4 +42,3 @@ export function renderWithRouterAndRedux(component, options = {}) {
     history,
   };
 }
-export default renderWithRouter;

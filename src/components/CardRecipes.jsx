@@ -31,16 +31,6 @@ function CardRecipes() {
   const [type, setType] = useState('');
   const [check, setCheck] = useState([]);
 
-  // useEffect(() => {
-  //   if (type !== '') {
-  //     const localStorageIngredients = getItem('inProgressRecipes')[type];
-  //     if (typeof localStorageIngredients === 'object'
-  //       && Object.keys(localStorageIngredients).includes(id)) {
-  //       setCheck(localStorageIngredients[id]);
-  //     }
-  //   }
-  // }, [id, type]);
-
   useEffect(() => {
     const comparationFunction = async () => {
       let typeFood = '';
