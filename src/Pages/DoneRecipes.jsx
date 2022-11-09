@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+
 function DoneRecipes() {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
   return (

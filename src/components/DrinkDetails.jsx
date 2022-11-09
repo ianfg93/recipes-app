@@ -1,15 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 import myContext from '../context/myContext';
 import MealsCarousel from './MealsCarousel';
 
-export default function DrinkDetails() {
+export default function DrinkDetails({ history }) {
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
   /* const [apiMealsDetails, setApiMealsDetails] = useContext(myContext); */
+
+  const handleButtonDetails = () => {
+    history.push(`/drinks/${paramsUrl.id}/in-progress`);
+  };
 
   useEffect(() => {
     const setApi = async () => {
@@ -28,7 +33,7 @@ export default function DrinkDetails() {
       setMeasure(getMesure);
     };
     setApi();
-  }, [paramsUrl]);
+  }, [paramsUrl, setApiRecipeDetails]);
 
   /* useEffect(() => {
     const setApiMeals = async () => {
@@ -47,8 +52,9 @@ export default function DrinkDetails() {
         <Button
           className="fixed-bottom"
           data-testid="start-recipe-btn"
+          onClick={ handleButtonDetails }
         >
-          Click Me
+          Start Recipe
         </Button>
       </div>
       DrinkDetails:
@@ -99,3 +105,7 @@ export default function DrinkDetails() {
     </div>
   );
 }
+
+DrinkDetails.propTypes = {
+  history: PropTypes.shape(),
+}.isRequired;

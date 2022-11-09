@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 
 function FavoriteRecipes() {
   const [favoritesRecipes] = useState([]);
+  const favoriteRecipes = useCallback(() => {
+    JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(favoriteRecipes);
+  }, []);
 
   return (
     <main>
