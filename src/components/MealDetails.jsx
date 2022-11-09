@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import myContext from '../context/myContext';
+import '../Recipes.css';
+import DrinksCarousel from './DrinksCarousel';
 
 export default function MealDetails() {
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
-  /* const [measures, setMeasures] = useState([]); */
+  /* const { apiDrinksDetails, setApiDrinksDetails } = useContext(myContext); */
+  /* const [drinksRecommendation, setDrinksRecommendation] = useState([]); */
 
   useEffect(() => {
     const setApi = async () => {
@@ -27,10 +31,29 @@ export default function MealDetails() {
     setApi();
   }, [paramsUrl, setApiRecipeDetails]);
 
+  /* useEffect(() => {
+    const setApiDrinks = async () => {
+      const numberSix = 6;
+      const responseApiDrinks = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const result = await responseApiDrinks.json();
+      setApiDrinksDetails(result.drinks.slice(0, numberSix));
+      const teste = result.drinks.slice(0, numberSix);
+      console.log(teste);
+    }; setApiDrinks();
+  }, []);
+ */
   /* console.log(apiRecipeDetails?.meals[0].strMealThumb); */
 
   return (
     <div>
+      <div>
+        <Button
+          className="fixed-bottom"
+          data-testid="start-recipe-btn"
+        >
+          Click Me
+        </Button>
+      </div>
       MealDetails
       {
         apiRecipeDetails?.meals !== undefined
@@ -74,6 +97,19 @@ export default function MealDetails() {
             </>
           ) : (<p>Loading</p>)
       }
+      <DrinksCarousel />
+      {/* <div className="carousel">
+        {apiDrinksDetails.map((e, index) => (
+          <div className="carouselItem" key={ index }>
+            <p data-testid={ `${index}-recommendation-card` } />
+            <img
+              src={ e.strDrinkThumb }
+              alt="drinks"
+              data-testid={ `${index}-recommendation-title` }
+            />
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 }

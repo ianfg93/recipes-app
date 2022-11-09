@@ -1,0 +1,12 @@
+.carousel {
+  display: flex;
+  overflow-x: scroll; }
+
+.carouselItem {
+  width: 51%;
+}
+
+.bottom {
+  right: 50%;
+  top: 100%;
+}
