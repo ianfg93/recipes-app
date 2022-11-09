@@ -1,18 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import myContext from '../context/myContext';
 import '../Recipes.css';
 import DrinksCarousel from './DrinksCarousel';
+import ShareIcon from '../images/shareIcon.svg';
 
 export default function MealDetails({ history }) {
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
+  const [copyMessage, setCopyMessage] = useState(false);
   /* const { apiDrinksDetails, setApiDrinksDetails } = useContext(myContext); */
   /* const [drinksRecommendation, setDrinksRecommendation] = useState([]); */
+  /* const { location } = useHistory(); */
+  /*  const history = useHistory(); */
+
   const handleButtonDetails = () => {
     history.push(`/meals/${paramsUrl.id}/in-progress`);
   };
@@ -48,17 +53,36 @@ export default function MealDetails({ history }) {
  */
   /* console.log(apiRecipeDetails?.meals[0].strMealThumb); */
 
+  const handleShareButton = () => {
+    copy(`http://localhost:3000${history.location.pathname}`);
+    setCopyMessage(true);
+  };
+  console.log(history.location.pathname);
+
   return (
     <div>
       <div>
-        <Button
+        <button
           className="fixed-bottom"
+          type="button"
           data-testid="start-recipe-btn"
           onClick={ handleButtonDetails }
         >
           Start Recipe
-        </Button>
+        </button>
       </div>
+      {copyMessage && (<p>Link copied!</p>)}
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleShareButton }
+      >
+        <img src={ ShareIcon } alt="img share button" />
+        Compartilhar
+      </button>
+      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <br />
+      <br />
       MealDetails
       {
         apiRecipeDetails?.meals !== undefined
@@ -115,8 +139,6 @@ export default function MealDetails({ history }) {
           </div>
         ))}
       </div> */}
-      <button type="button" data-testid="share-btn">Share</button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
     </div>
   );
 }

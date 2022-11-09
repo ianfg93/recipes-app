@@ -6,7 +6,7 @@
   width: 51%;
 }
 
-.bottom {
-  right: 50%;
-  top: 100%;
+.fixed-bottom {
+  bottom: 0;
+  position: fixed;
 }
