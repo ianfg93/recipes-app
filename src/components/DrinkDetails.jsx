@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import myContext from '../context/myContext';
+import MealsCarousel from './MealsCarousel';
 
 export default function DrinkDetails() {
-//   const { apiMealsDetails, setApiMealsDetails } = useContext(myContext);
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
+  /* const [apiMealsDetails, setApiMealsDetails] = useContext(myContext); */
 
   useEffect(() => {
     const setApi = async () => {
@@ -26,10 +28,29 @@ export default function DrinkDetails() {
       setMeasure(getMesure);
     };
     setApi();
-  }, [paramsUrl, setApiRecipeDetails]);
+  }, [paramsUrl]);
+
+  /* useEffect(() => {
+    const setApiMeals = async () => {
+      const numberSix = 6;
+      const responseApiMeals = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const result = await responseApiMeals.json();
+      setApiMealsDetails(result.meals.slice(0, numberSix));
+      const teste = result.meals.slice(0, numberSix);
+      console.log(teste);
+    }; setApiMeals();
+  }, []); */
 
   return (
     <div>
+      <div>
+        <Button
+          className="fixed-bottom"
+          data-testid="start-recipe-btn"
+        >
+          Click Me
+        </Button>
+      </div>
       DrinkDetails:
       {
         apiRecipeDetails?.drinks !== undefined
@@ -62,6 +83,19 @@ export default function DrinkDetails() {
             </>
           ) : (<p>Loading</p>)
       }
+      <MealsCarousel />
+      {/* <div>
+        {apiMealsDetails.map((e, index) => (
+          <div key={ index }>
+            <p data-testid={ `${index}-recommendation-card` } />
+            <img
+              src={ e.strMealThumb }
+              alt="meals"
+              data-testid={ `${index}-recommendation-title` }
+            />
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 }
