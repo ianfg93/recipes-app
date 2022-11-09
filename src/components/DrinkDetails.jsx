@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import myContext from '../context/myContext';
 import MealsCarousel from './MealsCarousel';
+import ShareIcon from '../images/shareIcon.svg';
 
 export default function DrinkDetails({ history }) {
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
+  const [copyMessage, setCopyMessage] = useState(false);
   /* const [apiMealsDetails, setApiMealsDetails] = useContext(myContext); */
 
   const handleButtonDetails = () => {
@@ -46,17 +48,35 @@ export default function DrinkDetails({ history }) {
     }; setApiMeals();
   }, []); */
 
+  const handleShareButton = () => {
+    copy(`http://localhost:3000${history.location.pathname}`);
+    setCopyMessage(true);
+  };
+
   return (
     <div>
       <div>
-        <Button
+        <button
           className="fixed-bottom"
+          type="button"
           data-testid="start-recipe-btn"
           onClick={ handleButtonDetails }
         >
           Start Recipe
-        </Button>
+        </button>
       </div>
+      {copyMessage && (<p>Link copied!</p>)}
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleShareButton }
+      >
+        <img src={ ShareIcon } alt="img share button" />
+        Compartilhar
+      </button>
+      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <br />
+      <br />
       DrinkDetails:
       {
         apiRecipeDetails?.drinks !== undefined
