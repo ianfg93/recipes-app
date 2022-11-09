@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import myContext from '../context/myContext';
 import '../Recipes.css';
 import DrinksCarousel from './DrinksCarousel';
 
-export default function MealDetails() {
+export default function MealDetails({ history }) {
   const { apiRecipeDetails, setApiRecipeDetails } = useContext(myContext);
   const paramsUrl = useParams();
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
   /* const { apiDrinksDetails, setApiDrinksDetails } = useContext(myContext); */
   /* const [drinksRecommendation, setDrinksRecommendation] = useState([]); */
+  const handleButtonDetails = () => {
+    history.push(`/meals/${paramsUrl.id}/in-progress`);
+  };
 
   useEffect(() => {
     const setApi = async () => {
@@ -50,8 +54,9 @@ export default function MealDetails() {
         <Button
           className="fixed-bottom"
           data-testid="start-recipe-btn"
+          onClick={ handleButtonDetails }
         >
-          Click Me
+          Start Recipe
         </Button>
       </div>
       MealDetails
@@ -113,3 +118,6 @@ export default function MealDetails() {
     </div>
   );
 }
+MealDetails.propTypes = {
+  history: PropTypes.shape(),
+}.isRequired;
