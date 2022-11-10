@@ -13,6 +13,7 @@ export default function MealDetails({ history }) {
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [copyMessage, setCopyMessage] = useState(false);
+  const [favoritesMeals, setFavoritesMeals] = useState([]);
   /* const { apiDrinksDetails, setApiDrinksDetails } = useContext(myContext); */
   /* const [drinksRecommendation, setDrinksRecommendation] = useState([]); */
   /* const { location } = useHistory(); */
@@ -36,6 +37,7 @@ export default function MealDetails({ history }) {
         .filter((mesure) => mesure[0].includes('strMeasure')
         && mesure[1] !== '' && mesure[1] !== null).map((mesure) => mesure[1]);
       setMeasure(getMesure);
+      setFavoritesMeals(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
     };
     setApi();
   }, [paramsUrl, setApiRecipeDetails]);
@@ -57,7 +59,20 @@ export default function MealDetails({ history }) {
     copy(`http://localhost:3000${history.location.pathname}`);
     setCopyMessage(true);
   };
-  console.log(history.location.pathname);
+  /* console.log(history.location.pathname); */
+
+  const handleFavoriteButton = () => {
+    const newFavoritesMeals = [...favoritesMeals, {
+      id: apiRecipeDetails?.meals[0].idMeal,
+      type: 'meal',
+      nationality: apiRecipeDetails?.meals[0].strArea,
+      category: apiRecipeDetails?.meals[0].strCategory,
+      alcoholicOrNot: '',
+      name: apiRecipeDetails?.meals[0].strMeal,
+      image: apiRecipeDetails?.meals[0].strMealThumb }];
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesMeals));
+  };
 
   return (
     <div>
@@ -80,7 +95,13 @@ export default function MealDetails({ history }) {
         <img src={ ShareIcon } alt="img share button" />
         Compartilhar
       </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ handleFavoriteButton }
+      >
+        Favorite
+      </button>
       <br />
       <br />
       MealDetails

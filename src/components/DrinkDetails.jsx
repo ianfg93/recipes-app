@@ -12,6 +12,7 @@ export default function DrinkDetails({ history }) {
   const [ingrediente, setIngrediente] = useState([]);
   const [measure, setMeasure] = useState([]);
   const [copyMessage, setCopyMessage] = useState(false);
+  const [favoritesDrinks, setFavoritesDrinks] = useState([]);
   /* const [apiMealsDetails, setApiMealsDetails] = useContext(myContext); */
 
   const handleButtonDetails = () => {
@@ -33,9 +34,11 @@ export default function DrinkDetails({ history }) {
         .filter((mesure) => mesure[0].includes('strMeasure')
         && mesure[1] !== '' && mesure[1] !== null).map((mesure) => mesure[1]);
       setMeasure(getMesure);
+      /* console.log(favoriteRecipes); */
+      setFavoritesDrinks(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
     };
     setApi();
-  }, [paramsUrl, setApiRecipeDetails]);
+  }, []);
 
   /* useEffect(() => {
     const setApiMeals = async () => {
@@ -51,6 +54,18 @@ export default function DrinkDetails({ history }) {
   const handleShareButton = () => {
     copy(`http://localhost:3000${history.location.pathname}`);
     setCopyMessage(true);
+  };
+
+  const handleFavoriteButton = () => {
+    const newFavoritesDrinks = [...favoritesDrinks, {
+      id: apiRecipeDetails?.drinks[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: apiRecipeDetails?.drinks[0].strCategory,
+      alcoholicOrNot: apiRecipeDetails?.drinks[0].strAlcoholic,
+      name: apiRecipeDetails?.drinks[0].strDrink,
+      image: apiRecipeDetails?.drinks[0].strDrinkThumb }];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesDrinks));
   };
 
   return (
@@ -74,7 +89,13 @@ export default function DrinkDetails({ history }) {
         <img src={ ShareIcon } alt="img share button" />
         Compartilhar
       </button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ handleFavoriteButton }
+      >
+        Favorite
+      </button>
       <br />
       <br />
       DrinkDetails:
