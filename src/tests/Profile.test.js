@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Profile from '../../Pages/Profile';
-import { renderWithRouter } from './renderWithRouter';
-import Provider from '../../context/myProvider';
+import Profile from '../Pages/Profile';
+import { renderWithRouter } from './helpers/renderWithRouter';
+import Provider from '../context/myProvider';
 
 describe('Testando o componente Header', () => {
   test('Verificando o profileDoneBtn ', () => {

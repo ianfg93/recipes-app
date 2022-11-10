@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import myContext from './myContext';
-import UseApiMeals from '../hooks/UseApiMeals';
-import UseApiDrinks from '../hooks/UseApiDrinks';
+import UseApiMeals from '../services/UseApiMeals';
+import UseApiDrinks from '../services/UseApiDrinks';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const MAX_RECIPES = 12;
 
@@ -29,6 +30,21 @@ function Provider({ children }) {
   const [apiRecipeDetails, setApiRecipeDetails] = useState([]);
   const [apiDrinksDetails, setApiDrinksDetails] = useState([]);
   const [apiMealsDetails, setApiMealsDetails] = useState([]);
+
+  const {
+    state: favoriteRecipes,
+    setState: setFavoriteRecipes,
+  } = useLocalStorage('favoriteRecipes', []);
+
+  const {
+    state: doneRecipes,
+    setState: setDoneRecipes,
+  } = useLocalStorage('doneRecipes', []);
+
+  const {
+    state: inProgressRecipes,
+    setState: setInProgressRecipes,
+  } = useLocalStorage('inProgressRecipes', { drinks: {}, meals: {} });
 
   const handleEmail = useCallback(({ target: { value } }) => {
     setEmail(value);
@@ -145,8 +161,12 @@ function Provider({ children }) {
         ingredientApi,
         handleOptionRadio,
         handleInputSearch,
+        favoriteRecipes,
+        setFavoriteRecipes,
         radioReturn,
         filterApiReturn,
+        inProgressRecipes,
+        setInProgressRecipes,
         recipeId,
         apiDrinks,
         apiMeals,
@@ -154,6 +174,8 @@ function Provider({ children }) {
         initialMeals,
         categoryDrinks,
         categoryMeals,
+        doneRecipes,
+        setDoneRecipes,
         handleApiDrinks,
         handleApiMeals,
         title,
@@ -174,12 +196,18 @@ function Provider({ children }) {
       handleInputSearch,
       handleApiDrinks,
       handleApiMeals,
+      favoriteRecipes,
+      setFavoriteRecipes,
+      inProgressRecipes,
+      setInProgressRecipes,
       inputSearch,
       ingredientApi,
       radioReturn,
       apiDrinks,
       apiMeals,
       filterApiReturn,
+      doneRecipes,
+      setDoneRecipes,
       recipeId,
       categoryDrinks,
       categoryMeals,
