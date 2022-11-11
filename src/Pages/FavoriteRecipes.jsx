@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
 function FavoriteRecipes() {
   const [favoritesRecipes, setFavoritesRecipes] = useState([]);
+  const history = useHistory();
 
   const favoriteRecipes = () => {
     setFavoritesRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
@@ -41,12 +43,17 @@ function FavoriteRecipes() {
       </button>
       { favoritesRecipes.map((card, index) => (
         <div key={ card.id }>
-          <img
-            src={ card.image }
-            alt={ card.name }
-            width="150px"
-            data-testid={ `${index}-horizontal-image` }
-          />
+          <button
+            type="button"
+            onClick={ () => history.push(`/${card.type}s/${card.id}`) }
+          >
+            <img
+              src={ card.image }
+              alt={ card.name }
+              width="150px"
+              data-testid={ `${index}-horizontal-image` }
+            />
+          </button>
           {card.alcoholicOrNot.includes('Alcoholic')
             ? (
               <p data-testid={ `${index}-horizontal-top-text` }>
@@ -60,9 +67,12 @@ function FavoriteRecipes() {
                 {' '}
                 { card.category }
               </p>)}
-          <p data-testid={ `${index}-horizontal-name` }>
-            { card.name }
-          </p>
+          <button
+            type="button"
+            onClick={ () => history.push(`/${card.type}s/${card.id}`) }
+          >
+            <p data-testid={ `${index}-horizontal-name` }>{card.name}</p>
+          </button>
           <button
             className="btn-fav"
             type="button"
